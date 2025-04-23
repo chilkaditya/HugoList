@@ -2,7 +2,7 @@
 ## Flow diagram
 ```mermaid
 flowchart TD
-    A[User opens your system] --> B[User hit auth url]
+    A[User opens the system] --> B[User hit auth url]
     B --> C[System generates<br/>Google OAuth login URL]
     C --> D[User clicks login<br/>and redirects to Google]
     D --> E[User authenticates<br/>and grants YouTube permission]
