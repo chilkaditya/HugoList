@@ -1,0 +1,77 @@
+<!-- form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Playlist</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create YouTube Playlist 🎶</h1>
+    </div>
+    <div class="form-container">
+
+        <label for="playlist-title">Title</label>
+        <input type="text" id="playlist-title" placeholder="Playlist Title" />
+
+        <label for="playlist-desc">Description</label>
+        <input type="text" id="playlist-description" placeholder="Playlist Description" />
+
+        <label for="songs">Songs</label>
+        <textarea id="songs" placeholder="Enter songs, one per line..."></textarea>
+
+        <input id="sub" type="submit" value="Create">
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        document.getElementById("sub").addEventListener("click", async function () {
+            const title = document.getElementById("playlist-title").value.trim();
+            const description = document.getElementById("playlist-description").value.trim();
+            const songsText = document.getElementById("songs").value.trim();
+
+            if (!title || !songsText) {
+                alert("Please enter a title and at least one song.");
+                return;
+            }
+
+            const songs = songsText.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+
+            const payload = {
+                title,
+                description,
+                songs
+            };
+
+            try {
+                const res = await fetch("http://localhost:8080/create-playlist", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                const mesgDiv = document.getElementById("message");
+                mesgDiv.innerText = data.message || data.error;
+
+                // Clear message after 3 seconds
+                setTimeout(() => {
+                    mesgDiv.innerText = "";
+                }, 3000);
+
+            } catch (err) {
+                console.error(err);
+                const mesgDiv = document.getElementById("message"); 
+                mesgDiv.innerText = "Something went wrong!";
+
+                // Clear message after 3 seconds
+                setTimeout(() => {
+                    mesgDiv.innerText = "";
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
