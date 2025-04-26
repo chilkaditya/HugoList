@@ -24,5 +24,5 @@ func AuthCallback(c *gin.Context) {
     fmt.Printf("Token: %s\n",token)
     utils.SaveToken(token) // save token for later use (in memory for now)
 
-    c.JSON(http.StatusOK, gin.H{"message": "Authentication successful!"})
+    c.Redirect(http.StatusFound, "http://localhost:5500/frontend/form.html")
 }
