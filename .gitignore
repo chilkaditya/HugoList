@@ -1,3 +1,5 @@
 .env
 *.mod
 *.sum
+*.txt
+node_modules/

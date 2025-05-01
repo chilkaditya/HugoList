@@ -17,7 +17,7 @@ func main() {
 	utils.InitOAuthConfig()
 
     r := gin.Default()
-    r.LoadHTMLGlob("frontend/*")
+    // r.LoadHTMLGlob("frontend/*")
 
     // Enable CORS
     r.Use(cors.New(cors.Config{
@@ -28,7 +28,6 @@ func main() {
     }))
 
     // Routes
-    r.GET("/",handlers.HomePageHandler)
     r.GET("/auth", handlers.AuthHandler)
     r.GET("/auth/callback", handlers.AuthCallback)
     r.POST("/create-playlist", handlers.CreatePlaylistHandler)
